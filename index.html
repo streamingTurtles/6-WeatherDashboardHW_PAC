@@ -1,12 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard APP</title>
-</head>
-<body>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <h1>Welcome to my Weather Application App</h1>
-</body>
+    <!-- Font Awesome, for icons -->
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 
+    <link rel="stylesheet" href="style.css">
+    <title>Weather Dashboard App</title>
+  </head>
+ 
+  <body>
+
+
+    <header>
+        <div class = "heading">
+            <h1>Weather Dashboard, Enter any City</h1>
+        </div>
+    </header>
+    <hr>
+
+
+    <div class="container-fluid">
+        <div class=row>
+            <div class="col-md-3 pl-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Search for a City:</h6>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                
+                                <input type="text" class="form-control">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    
+                    <ul><p>Previously Searched Cities:</p>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                
+                <div class='card'>
+                    <div class="card-body">
+                        
+                        <div>
+                            
+                            <span>City Name</span>
+                            <span>Current Date</span>
+                            <span>Weather Icon</span>
+                             <ul>
+                                 <li>Temperature: </li>
+                                 <li>Humidity: </li>
+                                 <li>Wind Speed: </li>
+                                 <li>UV Index: (with color indicator)</li>
+                             </ul>
+                        </div>
+                        <p class="card-text" id="cityTemp"></p>
+                        <p class="card-text" id="cityHumidity"></p>
+                        <p class="card-text" id="cityWind"></p>
+                        <p class="card-text" id="cityUV"></p>
+                        </ul> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="weatherForcast" class="col-md-9">
+                        <h3>5-Day Forecast:</h3>
+                        
+                        <div id="cardsForcast">
+                            
+                            <div class="card">
+                                <!-- ForeCast Day-1 -->
+                                <div class="card-body">
+                                    <span class="card-title" id='date1'>day-1 date</span>
+                                    <span id='weatherIcon1'></span>
+                                    <p class="card-text" id="temp1">Temperature</p>
+                                    <p class="card-text" id="humidity1">Humidity</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <!-- ForeCast Day-2 -->
+                                <div class="card-body" id="f2">
+                                    <span class="card-title" id='date2'>day-2 date</span>
+                                    <span id='weatherIcon2'></span>
+                                    <p class="card-text" id="temp2">Temperature</p>
+                                    <p class="card-text" id="humidity2">Humidity</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <!-- ForeCast Day-3 -->
+                                <div class="card-body" id="f3">
+                                    <span class="card-title" id='date3'>day-3 date</span>
+                                    <span id='weatherIcon3'></span>
+                                    <p class="card-text" id="temp3">Temperature</p>
+                                    <p class="card-text" id="humidity3">Humidity</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <!-- ForeCast Day-4 -->
+                                <div class="card-body" id="f4">
+                                    <span class="card-title" id='date4'>day-4 date</span>
+                                    <span id='weatherIcon4'></span>
+                                    <p class="card-text" id="temp4">Temperature</p>
+                                    <p class="card-text" id="humidity4">Humidity</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <!-- ForeCast Day-5 -->
+                                <div class="card-body" id="f5">
+                                    <span class="card-title" id='date5'>day-5 date</span>
+                                    <span id='weatherIcon5'></span>
+                                    <p class="card-text" id="temp5">Temperature</p>
+                                    <p class="card-text" id="humidity5">Humidity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Using dayjs cdn & local copy if not on cdn  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.7/dayjs.min.js" integrity="sha512-kZ+x2gdehn6OZMWZSp3Vt5R+v9hQTYEATQwaUfWquhxbvNVAy6IRtYs7asdyxKUTqG0I5ZqBqnzcBrpnHJCAGw==" crossorigin="anonymous"></script>
+    <script src="dayjs.min.js"></script>
+
+    <script src="weatherApp.js"></script>
+  </body>
 </html>
