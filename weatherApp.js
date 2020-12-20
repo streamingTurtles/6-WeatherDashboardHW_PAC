@@ -1,13 +1,10 @@
 
-
 // Start JS code
 
-
-
-function saveCitiesSearched(citiesStringList) {
+function saveCitiesSearched(citiesKeyValObjList) {
     // clear city weather data, but keeping searched cities
     $("#citiesInlocalStorage").empty();  
-    var keys = Object.keys(citiesStringList);
+    var keys = Object.keys(citiesKeyValObjList);
     for (var i = 0; i < keys.length; i++) {
       var cityListEntry = $("<button>");
       cityListEntry.addClass("citiesListed"); 
@@ -29,14 +26,27 @@ function saveCitiesSearched(citiesStringList) {
 
 
 //   function to get data using API calls - to build out:
-  function getWeatherData(city, citiesStringList) {
-
+  function getWeatherData(city, citiesKeyValObjList) {
+      
     console.log("streaming turtles are cool! ");
-    console.log("My API Key from OpenWeatherMap is: e012fbc5ba9141b98a8748d19623cffb ")
+    // console.log("My API Key from OpenWeatherMap is: e012fbc5ba9141b98a8748d19623cffb ")
     console.log("City Search Query Sring is: https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city ")
     // API key: e012fbc5ba9141b98a8748d19623cffb from OpenWeatherMap
-    var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city"
+    // var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city"
 
+    saveCitiesSearched(citiesKeyValObjList);
+    var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=" + city;
+    console.log("myQueryAPI is: ", myQueryAPI);
+    
+    $.ajax({
+        url: myQueryAPI,
+        method: "GET"
+    }).then(function(data){
+        console.log("current query url is: ", myQueryAPI); // URL query request for weather data
+        console.log("weather data received from request url : ", data); // object data received from request
+
+    });
+    
   }
   
 
@@ -51,15 +61,15 @@ function saveCitiesSearched(citiesStringList) {
 // this will run when the DOM has been loaded and ready to be acted on by Javascript
 $(document).ready(function() {
     // assign any current localStorage
-    var citiesStringListStringified = localStorage.getItem("citiesStringList");
+    var citiesKeyValObjListStringified = localStorage.getItem("citiesKeyValObjList");
     // un-Stringify localStorage back to object form
-    var citiesStringList = JSON.parse(citiesStringListStringified);
+    var citiesKeyValObjList = JSON.parse(citiesKeyValObjListStringified);
     // if no localStorage exists, make object for weather data storage
-    if (citiesStringList == null) {
-      citiesStringList = {};
-    }
-    
-    saveCitiesSearched(citiesStringList);
+            if (citiesKeyValObjList == null) {
+                citiesKeyValObjList = {};
+            }
+    saveCitiesSearched(citiesKeyValObjList);
+    console.log("citiesKeyValObjList contents is currently: ", citiesKeyValObjList);
     // hide previous city forcast when page loads
     $("cityWeather").hide();
     $("#fiveDayForecast").hide();
@@ -67,13 +77,15 @@ $(document).ready(function() {
     // when you click on the button - check to see if empty or has a city typed inside
     $("#searchCityWeatherButn").on("click", function(event) {
       event.preventDefault();  // don't submit to any server
-      var city = $("#userInput").val().trim().toLowerCase();  // returns the input value, removes white space an toLowerCase
-      // check if something is in "userCityInput" first - then set it to true and localStorage it & stringify at the same time 
+      var city = $("#userInput").val().trim().toLowerCase();  // returns the input value, removes white space an toLowerCase for clean search
+      console.log("current city clicked on is: ", city);
+      // check if something is in "userInput" first - then set it to true and localStorage it & stringify at the same time 
       if (city != "") {      
-        citiesStringList[city] = true;
-        localStorage.setItem("citiesStringList", JSON.stringify(citiesStringList));
+        citiesKeyValObjList[city] = true;
+        // citiesKeyValObjList.city = true;
+        localStorage.setItem("citiesKeyValObjList", JSON.stringify(citiesKeyValObjList));
       // function call to that makes a query to find the weather and puts info into the bootstrap cards
-      getWeatherData(city, citiesStringList);
+      getWeatherData(city, citiesKeyValObjList);
       // show in the HTML current searched city weather
       $("cityWeather").show();
       $("#fiveDayForecast").show();
@@ -85,7 +97,7 @@ $(document).ready(function() {
       event.preventDefault();
       var city = $(this).text(); // grab the content of "this" html button text content
       // function call to that makes a query to find the weather and puts info into the bootstrap cards
-      getWeatherData(city, citiesStringList);
+      getWeatherData(city, citiesKeyValObjList);
       // show in the HTML current searched city weather
       $("cityWeather").show();
       $("#fiveDayForecast").show();
