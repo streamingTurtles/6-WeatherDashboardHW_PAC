@@ -119,20 +119,29 @@ function getWeatherData(city, citiesKeyValObjList) {
                         }).then (function(forecast){ // what is coming into this function when the promise resolves, store in fiveDayForcast object
                             console.log("The 5 Day forcast object from API is: ", forecast);
                             // 5 day forcast array represents weather data every 3hrs, I will target noon-time for each day of the 5 day forcast
-                            // The loop will match noon time for each day given that each day is divided by 3hr intervals as show in the 0-39 indexed forcast.list array
+                            // The loop will match to 3pm time for each day given that each day is divided by 3hr intervals as show in the 0-39 indexed forcast.list array
                             for (var i=0; i < forecast.list.length; i+=8){
                                  var day = $("<h6>"); // jQuery make tag, put in day
                                  var num = (i + 8)/8; // fudge num value so that it counts from 1 to 5 to match its id attribute date1,2,3,4,5
                                  var numForDate = (i+8)-3; // puts me in the middle of the day at 3:00pm
-                                //  if (numForDate = 40){numForDate=39}
                                  console.log("check that our loop counts correctly - its day: ", "date" + num);
-                                 $("#date" + num).empty(); // 
-                                 //  $("#date" + num).append(day.text(currentDateTime.add(1,"days").format("m/d/yyyy")));
-                                //  $("#date" + num).append(day.text(currentDateTime));
-                                console.log("num is: ", num);
-                                console.log("numForDate is: ", numForDate);
-                                console.log("date is: ", forecast.list[numForDate].dt_txt);
+                                 $("#date" + num).empty(); // clear prevously entered data
+                                 console.log("num is: ", num);
+                                 console.log("numForDate is: ", numForDate);
+                                 console.log("date is: ", forecast.list[numForDate].dt_txt);
                                  $("#date" + num).append(forecast.list[numForDate].dt_txt);
+                                 // fill card with weather icon
+                                 https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon - documentation
+                                 var weatherIcon = $("<img>");
+                                 var littleIcon = forecast.list[numForDate].weather[0].icon;
+                                 weatherIcon.attr("src","https://openweathermap.org/img/w/"+forecast.list[numForDate].weather[0].icon+".png");
+                                 weatherIcon.attr("src","https://openweathermap.org/img/w/"+littleIcon+".png");
+                                 console.log("icon is: ", forecast.list[numForDate].weather[0].icon);
+                                 console.log("icon is: ", littleIcon);
+                                 $("#iconGraphic" + num).empty();
+                                 $("#iconGraphic" + num).append(weatherIcon);
+
+
                             };
                         })
                 
