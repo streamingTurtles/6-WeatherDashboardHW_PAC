@@ -101,13 +101,20 @@ function getWeatherData(city, citiesKeyValObjList) {
                                                                                                 uvIndex[5].value +', '+
                                                                                                 uvIndex[6].value );
                     $("#cityUV").text("Current UV index is: " + uvIndex[3].value);
+
                     // To do: 
                     // to add background color (using CSS) to text area, indicating favorable, moderate, or severe 
                     // favorable, moderate, or severe UV ranges. 
                     // UV index: (0 to 3 = favoriable)
                     // UV index: (3 to 5 = moderate, wear sun blocking clothing)
-                    // UV index: (8 to 10 = severe, burning can occur)
-
+                    // UV index: (5 to 10 = severe, burning can occur)
+                    console.log("UVIndex Indicator is at: ", uvIndex[3].value);
+                    if (uvIndex[3].value < 3){
+                        $("p.UVcolorIndicator").attr("style", "background-color:yellow");} // color inidcator for favoriable             
+                    if ((uvIndex[3].value >= 3) && (uvIndex[3].value <= 5)){
+                        $("p.UVcolorIndicator").attr("style", "background-color:orange");} // color inidcator for moderate
+                    if ((uvIndex[3].value > 5) && (uvIndex[3].value <= 10)){
+                        $("p.UVcolorIndicator").attr("style", "background-color:red   ");} // color inidcator for severe
                
                         // 3. Five Day Forcast:
                         // https://openweathermap.org/forecast5 - documentation for API call for 5-day forcast
@@ -149,6 +156,11 @@ function getWeatherData(city, citiesKeyValObjList) {
                                  $("#humidity" + num).empty();
                                  $("#humidity" + num).text("Humidity: "+ forecast.list[numForDate].main.humidity + "%");
 
+                                 // add background color
+                                 $(".bluBkgnd").attr(
+                                    "style",
+                                    "background-color:dodgerblue; color:white"
+                                  );
 
 
                             };
