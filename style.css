@@ -1,4 +1,10 @@
 
+
+
+/* don't need these anymore, I dynamically add these in the javascript */
+/* Initially used for testing the color background/s */
+
+/* 
 .bluBkgnd {
     margin: 10px;
 }
@@ -6,5 +12,5 @@
 .UVcolorIndicator{
     margin: 10px;
     background-color: yellow;
-}
+} */
 

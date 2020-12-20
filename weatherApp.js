@@ -155,24 +155,14 @@ function getWeatherData(city, citiesKeyValObjList) {
                                  $("#temperature" + num).text("Temp: " + forecast.list[numForDate].main.temp + " °F") // on mac Option+Shift+8 for the little degree 
                                  $("#humidity" + num).empty();
                                  $("#humidity" + num).text("Humidity: "+ forecast.list[numForDate].main.humidity + "%");
-
-                                 // add background color
+                                 // adding background color to the 5 day forcast cards
                                  $(".bluBkgnd").attr(
                                     "style",
                                     "background-color:dodgerblue; color:white"
                                   );
-
-
                             };
-                        })
-                
-
-                                                                                                                
+                        })                                                                                                               
                 });
-
-
-
-
             });
 }
   

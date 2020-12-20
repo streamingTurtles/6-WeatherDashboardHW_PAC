@@ -14,21 +14,20 @@
     <title>Weather Dashboard App</title>
   </head>
  
-  <body>
+  <body style="background-color:lightgray;">
 
 
     <header>
         <div class = "heading">
-            <h1>Weather Dashboard, Enter any City</h1>
+            <h1 style="background-color:powderblue; text-align:center;">Weather Dashboard</h1>
         </div>
     </header>
-    <hr>
-
-
+    
     <div class="container-fluid">
         <div class=row>
             <div class="col-md-3 pl-2">
-                <div class="card" style="width: 22rem;">
+                <!--  -->
+                <div class="card">                       
                     <div class="card-body">
                         <h6>Search for a City:</h6>
                         <form class="form-inline">
@@ -63,7 +62,8 @@
                 <div class="row">
                     <div id="fiveDayForecast" class="col-md-9">
                         <h4>5-Day Forecast:</h4>
-                        <div id="forecast-cards">
+                        <!--  -->
+                        <div style="display: flex;flex-direction: row;justify-content: center/space-between;">    
                             <div class="card bluBkgnd">
                                 <div class="card-body">
                                     <span class="card-title" id='date1'>
