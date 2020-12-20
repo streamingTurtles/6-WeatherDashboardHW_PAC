@@ -41,12 +41,35 @@ function saveCitiesSearched(citiesKeyValObjList) {
     $.ajax({
         url: myQueryAPI,
         method: "GET"
-    }).then(function(data){
+    }).then(function(weather){  // pass in weather object from return of the myQueryAPI call
+        // using dayJS - show current time dayjs().format() 
+        // console.log("Today is: ", dayjs().format('dddd, MMMM D YYYY' +  ' h mm A'));
+        console.log("Today is: ", dayjs().format('dddd, MMMM D YYYY' +  ' h:mm A'));
+        var currentDateTime = dayjs().format('ddd, M/D/YYYY');
+        console.log(currentDateTime);
         console.log("current query url is: ", myQueryAPI); // URL query request for weather data
-        console.log("weather data received from request url : ", data); // object data received from request
+        console.log("weather data received from request url : ", weather); // object data received from request
+        // adding the City name to render in the html from the weather object - placement in id=#cityName
+        var showDate = $("<h4>"); // jQuery, go make me a h4 tag, & create variable to store element object to render in html markup
+        $("#cityName").empty(); // clear any preExisting data
+        $("#cityName").append(showDate.text(currentDateTime)); // jQuery, go find id and add date into its html tag the id lives
+        var showCity = $("<h4>").text(weather.name); // create variable to store object property weather.name to render in html markup
+        $("#cityName").prepend(showCity)// jQuery, go find id in html and now render in html markup in the beginning of selected tag
+        // adding the City weather icon to render in the html from the weather object - placement in id=#cityWeatherIcon
+        // https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon - FYI: how to overview to implement rendering the icon
+        var showIcon = $("<img>").attr("src","https://openweathermap.org/img/w/" + weather.weather[0].icon + ".png");
+        $("#cityWeatherIcon").empty(); // clear any preExisting data
+        $("#cityWeatherIcon").append(showIcon); // render to html at id = #cityWeatherIcon
+
+
+
+
+
+
+
 
     });
-    
+
   }
   
 
