@@ -37,7 +37,15 @@ function saveCitiesSearched(citiesKeyValObjList) {
     saveCitiesSearched(citiesKeyValObjList);
     var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=" + city;
     console.log("myQueryAPI is: ", myQueryAPI);
+    // for UV data - seperate Ajax query needed
+    // https://openweathermap.org/api/uvi  - documentation
+    var longitude; // needed for UV query 
+    var latitude;  // needed for UV query
+    var UVQueryAPI = "https://api.openweathermap.org/data/2.5/uvi/forecast?&units=imperial&appid="+"&lat="+latitude+"&lon="+longitude;
+    console.log("UVQueryAPI is: ", UVQueryAPI);
+
     
+    // weather data query
     $.ajax({
         url: myQueryAPI,
         method: "GET"
@@ -60,10 +68,17 @@ function saveCitiesSearched(citiesKeyValObjList) {
         var showIcon = $("<img>").attr("src","https://openweathermap.org/img/w/" + weather.weather[0].icon + ".png");
         $("#cityWeatherIcon").empty(); // clear any preExisting data
         $("#cityWeatherIcon").append(showIcon); // render to html at id = #cityWeatherIcon
+        // adding in the temperature, humidity, windSpeed & UV index
+        $("#cityTemp").text("Current Temperature is: " + weather.main.temp + " °F");
+        $("#cityHumidity").text("Current Humidity is: " + weather.main.humidity + "%");
+        $("#cityWind").text("Current Wind Speed is: " + weather.wind.speed + " MPH");  
+        // UV index is a different API query that requires the Longitude & Latitude coordinates:
+        // needs another Ajax call to get this data
+        // https://openweathermap.org/api/uvi  - documentation
 
+        // UV code parseing todo:
 
-
-
+        // week forcast data to follow here and render in bootstrap cards
 
 
 
