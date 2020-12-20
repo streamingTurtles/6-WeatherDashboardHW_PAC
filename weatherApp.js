@@ -28,23 +28,24 @@ function saveCitiesSearched(citiesKeyValObjList) {
 //   function to get data using API calls - to build out:
   function getWeatherData(city, citiesKeyValObjList) {
       
-    console.log("streaming turtles are cool! ");
+    console.log("Here is a Cookie: streaming turtles are cool! ");
     // console.log("My API Key from OpenWeatherMap is: e012fbc5ba9141b98a8748d19623cffb ")
     console.log("City Search Query Sring is: https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city ")
-    // API key: e012fbc5ba9141b98a8748d19623cffb from OpenWeatherMap
-    // var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city"
-
-    saveCitiesSearched(citiesKeyValObjList);
-    var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=" + city;
-    console.log("myQueryAPI is: ", myQueryAPI);
+    var myAPIkey= "e012fbc5ba9141b98a8748d19623cffb"; //from OpenWeatherMap
+    //
     // for UV data - seperate Ajax query needed
     // https://openweathermap.org/api/uvi  - documentation
-    var longitude; // needed for UV query 
-    var latitude;  // needed for UV query
-    var UVQueryAPI = "https://api.openweathermap.org/data/2.5/uvi/forecast?&units=imperial&appid="+"&lat="+latitude+"&lon="+longitude;
-    console.log("UVQueryAPI is: ", UVQueryAPI);
+    var longitude; // variable needed for the extra data needed for UV query string
+    var latitude ; // variable needed for the extra data needed for UV query string
+ 
 
-    
+    saveCitiesSearched(citiesKeyValObjList);
+    // API query string to get the weather object
+    // var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=city"
+    var myQueryAPI = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=e012fbc5ba9141b98a8748d19623cffb&q=" + city;
+    console.log("myQueryAPI is: ", myQueryAPI);
+
+    // 1. Top Line Weather
     // weather data query
     $.ajax({
         url: myQueryAPI,
@@ -72,13 +73,53 @@ function saveCitiesSearched(citiesKeyValObjList) {
         $("#cityTemp").text("Current Temperature is: " + weather.main.temp + " °F");
         $("#cityHumidity").text("Current Humidity is: " + weather.main.humidity + "%");
         $("#cityWind").text("Current Wind Speed is: " + weather.wind.speed + " MPH");  
+        
+
+        // 2. UV index:
+        // https://openweathermap.org/api/uvi  - documentation
         // UV index is a different API query that requires the Longitude & Latitude coordinates:
         // needs another Ajax call to get this data
+        longitude = weather.coord.lon; // set variable using coor.lon in the weather object from initial myQueryAPI call
+        latitude  = weather.coord.lat; // set variable using coor.lon in the weather object from initial myQueryAPI call
+        console.log("longitude & latitude data is: ", longitude, latitude);
         // https://openweathermap.org/api/uvi  - documentation
+        // concatenate Longitude & Latitude to updated API call for UV data
+        var UVQueryAPI = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat="+latitude+"&lon="+longitude+"&appid="+myAPIkey;
+        console.log("UVQueryAPI is: ", UVQueryAPI);
+        // now make another ajax call:
+        $.ajax({
+            url: UVQueryAPI,  // silly typo - url cannont be URL - it throws aAccess to XMLHttpRequest from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, chrome-untrusted, https.
+            method: "GET"
+        }).then (function(uvIndex){  // UV Index data for our promise function to work on
+            console.log("UV data object is: ", uvIndex);
+            console.log("UVIndex array at sample time positions: 0,1,2,3,4,5,6,7: ", uvIndex[0].value +', '+
+                                                                                        uvIndex[1].value +', '+
+                                                                                        uvIndex[2].value +', '+
+                                                                                        uvIndex[3].value +', '+
+                                                                                        uvIndex[4].value +', '+
+                                                                                        uvIndex[5].value +', '+
+                                                                                        uvIndex[6].value );
+            $("#cityUV").text("Current UV index is: " + uvIndex[3].value);
+            // To do: 
+            // to add background color (using CSS) to text area, indicating favorable, moderate, or severe 
+            // build out conditional if statement that decides what is favorable, moderate, or severe - need to look up 
+            // favorable, moderate, or severe UV ranges.                                                                                              
+        });
+    
+        
+        // 5 Day Forcast:
 
-        // UV code parseing todo:
 
-        // week forcast data to follow here and render in bootstrap cards
+
+
+
+
+
+
+
+        
+
+
 
 
 
