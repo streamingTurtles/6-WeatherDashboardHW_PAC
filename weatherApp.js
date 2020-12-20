@@ -103,8 +103,10 @@ function getWeatherData(city, citiesKeyValObjList) {
                     $("#cityUV").text("Current UV index is: " + uvIndex[3].value);
                     // To do: 
                     // to add background color (using CSS) to text area, indicating favorable, moderate, or severe 
-                    // build out conditional if statement that decides what is favorable, moderate, or severe - need to look up 
                     // favorable, moderate, or severe UV ranges. 
+                    // UV index: (0 to 3 = favoriable)
+                    // UV index: (3 to 5 = moderate, wear sun blocking clothing)
+                    // UV index: (8 to 10 = severe, burning can occur)
 
                
                         // 3. Five Day Forcast:
@@ -120,6 +122,7 @@ function getWeatherData(city, citiesKeyValObjList) {
                             console.log("The 5 Day forcast object from API is: ", forecast);
                             // 5 day forcast array represents weather data every 3hrs, I will target noon-time for each day of the 5 day forcast
                             // The loop will match to 3pm time for each day given that each day is divided by 3hr intervals as show in the 0-39 indexed forcast.list array
+                            // fill card with 5 day date & time
                             for (var i=0; i < forecast.list.length; i+=8){
                                  var day = $("<h6>"); // jQuery make tag, put in day
                                  var num = (i + 8)/8; // fudge num value so that it counts from 1 to 5 to match its id attribute date1,2,3,4,5
@@ -131,7 +134,7 @@ function getWeatherData(city, citiesKeyValObjList) {
                                  console.log("date is: ", forecast.list[numForDate].dt_txt);
                                  $("#date" + num).append(forecast.list[numForDate].dt_txt);
                                  // fill card with weather icon
-                                 https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon - documentation
+                                 // https://stackoverflow.com/questions/44177417/how-to-display-openweathermap-weather-icon - documentation
                                  var weatherIcon = $("<img>");
                                  var littleIcon = forecast.list[numForDate].weather[0].icon;
                                  weatherIcon.attr("src","https://openweathermap.org/img/w/"+forecast.list[numForDate].weather[0].icon+".png");
@@ -140,6 +143,12 @@ function getWeatherData(city, citiesKeyValObjList) {
                                  console.log("icon is: ", littleIcon);
                                  $("#iconGraphic" + num).empty();
                                  $("#iconGraphic" + num).append(weatherIcon);
+                                 // fill card with Temperature status
+                                 $("#temperature" + num).empty();
+                                 $("#temperature" + num).text("Temp: " + forecast.list[numForDate].main.temp + " °F") // on mac Option+Shift+8 for the little degree 
+                                 $("#humidity" + num).empty();
+                                 $("#humidity" + num).text("Humidity: "+ forecast.list[numForDate].main.humidity + "%");
+
 
 
                             };
